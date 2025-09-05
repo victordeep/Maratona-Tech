@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugestões para a cidade de Rio Branco do Ivaí</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f72585;
+            --terminal-bg: #1e1e1e;
+            --terminal-text: #f0f0f0;
+            --terminal-prompt: #4cc9f0;
+            --terminal-command: #a5d8ff;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark-color);
+            line-height: 1.6;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(72, 149, 239, 0.05) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        .mode-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mode-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(67, 97, 238, 0.2);
+        }
+
+        /* Estilos do Formulário Tradicional */
+        .form-container {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .confirmation-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* Estilos do Terminal */
+        .terminal-container {
+            display: none;
+            background-color: var(--terminal-bg);
+            color: var(--terminal-text);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            font-family: 'Courier New', monospace;
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--terminal-prompt);
+        }
+
+        .terminal-body {
+            line-height: 1.5;
+        }
+
+        .terminal-prompt {
+            color: var(--terminal-prompt);
+        }
+
+        .terminal-command {
+            color: var(--terminal-command);
+        }
+
+        .terminal-input {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .terminal-input span {
+            color: var(--terminal-prompt);
+            margin-right: 10px;
+        }
+
+        #terminalCommand {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: var(--terminal-text);
+            font-family: 'Courier New', monospace;
+            outline: none;
+        }
+
+        /* Botão de Envio */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        /* Mensagens de Status */
+        .status-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            display: none;
+        }
+
+        .success {
+            background-color: rgba(76, 201, 240, 0.2);
+            color: var(--dark-color);
+            border: 1px solid var(--success-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .mode-selector {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sugestões para a cidade de Rio Branco do Ivaí</h1>
+        
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="form">Modo Formulário</button>
+            <button class="mode-btn" data-mode="terminal">Modo Terminal</button>
+        </div>
+        
+        <!-- Formulário Tradicional -->
+        <div id="formContainer" class="form-container">
+            <p>Preencha o formulário para enviar sua sugestão ou reclamação:</p>
+            
+            <form id="formSugestao">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tipo">Tipo de Mensagem:</label>
+                    <select id="tipo" name="tipo" required>
+                        <option value="Sugestão">Sugestão</option>
+                        <option value="Reclamação">Reclamação</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea id="mensagem" name="mensagem" rows="6" required></textarea>
+                </div>
+                
+                <div class="confirmation-checkbox">
+                    <input type="checkbox" id="receberCopia" name="receberCopia" checked>
+                    <label for="receberCopia">Receber cópia da mensagem no meu email</label>
+                </div>
+                
+                <button type="submit" class="submit-btn">Enviar Mensagem</button>
+            </form>
+        </div>
+        
+        <!-- Terminal de Comandos -->
+        <div id="terminalContainer" class="terminal-container">
+            <div class="terminal-header">
+                <span>Terminal de Sugestões - Prefeitura Municipal</span>
+                <span>v1.0.0</span>
+            </div>
+            
+            <div class="terminal-body" id="terminalOutput">
+                <div>Bem-vindo ao Terminal de Sugestões da Prefeitura</div>
+                <div>Digite <span class="terminal-command">ajuda</span> para ver os comandos disponíveis</div>
+                <br>
+                <div class="terminal-prompt">>> <span class="terminal-command">iniciar</span></div>
+                <div>Sistema de envio de mensagens pronto.</div>
+                <div>Por favor, informe seus dados:</div>
+            </div>
+            
+            <div class="terminal-input">
+                <span class="terminal-prompt">>></span>
+                <input type="text" id="terminalCommand" placeholder="Digite um comando...">
+            </div>
+        </div>
+        
+        <div id="statusMessage" class="status-message"></div>
+    </div>
+
+    <script>
+        // Alternar entre modos
+        const modeBtns = document.querySelectorAll('.mode-btn');
+        const formContainer = document.getElementById('formContainer');
+        const terminalContainer = document.getElementById('terminalContainer');
+        
+        modeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                if (btn.dataset.mode === 'form') {
+                    formContainer.style.display = 'block';
+                    terminalContainer.style.display = 'none';
+                } else {
+                    formContainer.style.display = 'none';
+                    terminalContainer.style.display = 'block';
+                    document.getElementById('terminalCommand').focus();
+                }
+            });
+        });
+        
+        // Variáveis para o terminal
+        let terminalData = {
+            nome: '',
+            email: '',
+            tipo: 'Sugestão',
+            mensagem: '',
+            step: 0 // 0 = nome, 1 = email, 2 = tipo, 3 = mensagem, 4 = confirmação
+        };
+        
+        // Comandos do terminal
+        const terminalCommands = {
+            ajuda: () => {
+                addTerminalOutput(`
+                    <div class="terminal-prompt">Comandos disponíveis:</div>
+                    <div><span class="terminal-command">iniciar</span> - Começar novo envio</div>
+                    <div><span class="terminal-command">sugestao</span> - Definir como sugestão</div>
+                    <div><span class="terminal-command">reclamacao</span> - Definir como reclamação</div>
+                    <div><span class="terminal-command">sim</span> - Confirmar envio</div>
+                    <div><span class="terminal-command">nao</span> - Cancelar envio</div>
+                    <div><span class="terminal-command">limpar</span> - Limpar terminal</div>
+                `);
+            },
+            limpar: () => {
+                document.getElementById('terminalOutput').innerHTML = '';
+            },
+            iniciar: () => {
+                terminalData = {
+                    nome: '',
+                    email: '',
+                    tipo: 'Sugestão',
+                    mensagem: '',
+                    step: 0
+                };
+                addTerminalOutput(`
+                    <div>Sistema de envio de mensagens pronto.</div>
+                    <div>Por favor, informe seus dados:</div>
+                    <div>Qual é o seu nome completo?</div>
+                `);
+            },
+            sugestao: () => {
+                if (terminalData.step >= 2) {
+                    terminalData.tipo = 'Sugestão';
+                    addTerminalOutput(`
+                        <div>Tipo definido como: <span class="terminal-command">Sugestão</span></div>
+                        <div>Por favor, digite sua mensagem:</div>
+                    `);
+                    terminalData.step = 3;
+                }
+            },
+            reclamacao: () => {
+                if (terminalData.step >= 2) {
+                    terminalData.tipo = 'Reclamação';
+                    addTerminalOutput(`
+                        <div>Tipo definido como: <span class="terminal-command">Reclamação</span></div>
+                        <div>Por favor, digite sua mensagem:</div>
+                    `);
+                    terminalData.step = 3;
+                }
+            },
+            sim: () => {
+                if (terminalData.step === 4) {
+                    sendTerminalData();
+                }
+            },
+            nao: () => {
+                if (terminalData.step === 4) {
+                    addTerminalOutput('<div>Envio cancelado. Digite <span class="terminal-command">iniciar</span> para começar novamente.</div>');
+                    terminalData.step = -1;
+                }
+            }
+        };
+        
+        // Função para adicionar saída no terminal
+        function addTerminalOutput(html) {
+            const output = document.getElementById('terminalOutput');
+            output.innerHTML += html;
+            terminalContainer.scrollTop = terminalContainer.scrollHeight;
+        }
+        
+        // Processar comandos do terminal
+        document.getElementById('terminalCommand').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim();
+                this.value = '';
+                
+                // Adiciona o comando no histórico
+                addTerminalOutput(`<div class="terminal-prompt">>> <span class="terminal-command">${command}</span></div>`);
+                
+                // Processa o comando
+                if (terminalCommands[command]) {
+                    terminalCommands[command]();
+                } else {
+                    processTerminalInput(command);
+                }
+            }
+        });
+        
+        // Processar entrada do terminal
+        function processTerminalInput(input) {
+            switch (terminalData.step) {
+                case 0: // Nome
+                    terminalData.nome = input;
+                    addTerminalOutput('<div>Qual é o seu email?</div>');
+                    terminalData.step = 1;
+                    break;
+                    
+                case 1: // Email
+                    if (!validateEmail(input)) {
+                        addTerminalOutput('<div>Email inválido. Por favor, digite um email válido:</div>');
+                        return;
+                    }
+                    terminalData.email = input;
+                    addTerminalOutput(`
+                        <div>Esta é uma <span class="terminal-command">sugestao</span> ou <span class="terminal-command">reclamacao</span>?</div>
+                    `);
+                    terminalData.step = 2;
+                    break;
+                    
+                case 3: // Mensagem
+                    terminalData.mensagem = input;
+                    addTerminalOutput(`
+                        <div>Confira seus dados:</div>
+                        <div>Nome: ${terminalData.nome}</div>
+                        <div>Email: ${terminalData.email}</div>
+                        <div>Tipo: ${terminalData.tipo}</div>
+                        <div>Mensagem: ${terminalData.mensagem}</div>
+                        <br>
+                        <div>Confirmar envio? (<span class="terminal-command">sim</span> / <span class="terminal-command">nao</span>)</div>
+                    `);
+                    terminalData.step = 4;
+                    break;
+                    
+                default:
+                    addTerminalOutput('<div>Comando não reconhecido. Digite <span class="terminal-command">ajuda</span> para ver os comandos.</div>');
+            }
+        }
+        
+        // Enviar dados do terminal
+        function sendTerminalData() {
+            // Email da prefeitura (substitua pelo email real)
+            const emailPrefeitura = 'contato@prefeitura.nossacidade.gov.br';
+            
+            // Assunto do email
+            const assunto = `${terminalData.tipo} para a Cidade - ${terminalData.nome}`;
+            
+            // Corpo do email para a prefeitura
+            const corpoEmailPrefeitura = `
+                Nome: ${terminalData.nome}
+                Email: ${terminalData.email}
+                Tipo: ${terminalData.tipo}
+                
+                Mensagem:
+                ${terminalData.mensagem}
+                
+                ---
+                Esta mensagem foi enviada através do terminal de sugestões do site.
+            `;
+            
+            // Corpo do email de confirmação para o cidadão
+            const corpoEmailConfirmacao = `
+                Prezado(a) ${terminalData.nome},
+                
+                Agradecemos pelo seu contato! Esta é uma confirmação de que recebemos sua ${terminalData.tipo.toLowerCase()}:
+                
+                "${terminalData.mensagem}"
+                
+                Sua mensagem foi encaminhada para o setor responsável e será analisada.
+                Caso necessário, entraremos em contato através deste email.
+                
+                Protocolo: #${Math.floor(Math.random() * 1000000).toString().padStart(6, '0')}
+                Data: ${new Date().toLocaleDateString('pt-BR')}
+                
+                Atenciosamente,
+                Prefeitura Municipal de Nossa Cidade
+                
+                ---
+                Esta é uma mensagem automática, por favor não responda.
+            `;
+            
+            // Criar link mailto para a prefeitura
+            const mailtoLinkPrefeitura = `mailto:${emailPrefeitura}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmailPrefeitura)}`;
+            
+            // Criar link mailto para confirmação
+            const mailtoLinkConfirmacao = `mailto:${terminalData.email}?subject=Confirmação de ${terminalData.tipo.toLowerCase()}&body=${encodeURIComponent(corpoEmailConfirmacao)}`;
+            
+            // Abrir cliente de email para enviar à prefeitura
+            window.location.href = mailtoLinkPrefeitura;
+            
+            // Simular envio de confirmação
+            console.log('Email de confirmação seria enviado para:', terminalData.email);
+            
+            // Mostrar mensagem de sucesso
+            addTerminalOutput(`
+                <div>Mensagem enviada com sucesso!</div>
+                <div>Você receberá uma cópia de confirmação no email cadastrado.</div>
+                <br>
+                <div>Digite <span class="terminal-command">iniciar</span> para enviar outra mensagem.</div>
+            `);
+            
+            // Mostrar mensagem de status no formulário também
+            showStatus('Mensagem enviada com sucesso através do terminal!', 'success');
+            
+            terminalData.step = -1;
+        }
+        
+        // Enviar dados do formulário tradicional
+        document.getElementById('formSugestao').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Coletar dados do formulário
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const tipo = document.getElementById('tipo').value;
+            const mensagem = document.getElementById('mensagem').value;
+            const receberCopia = document.getElementById('receberCopia').checked;
+            
+            // Validar email
+            if (!validateEmail(email)) {
+                showStatus('Por favor, insira um email válido.', 'error');
+                return;
+            }
+            
+            // Email da prefeitura (substitua pelo email real)
+            const emailPrefeitura = 'rafael.assis.santos@escola.pr.gov.br';
+            
+            // Assunto do email
+            const assunto = `${tipo} para a Cidade - ${nome}`;
+            
+            // Corpo do email para a prefeitura
+            const corpoEmailPrefeitura = `
+                Nome: ${nome}
+                Email: ${email}
+                Tipo: ${tipo}
+                
+                Mensagem:
+                ${mensagem}
+                
+                ---
+                Esta mensagem foi enviada através do formulário de contato do site.
+            `;
+            
+            // Corpo do email de confirmação para o cidadão
+            const corpoEmailConfirmacao = `
+                Prezado(a) ${nome},
+                
+                Agradecemos pelo seu contato! Esta é uma confirmação de que recebemos sua ${tipo.toLowerCase()}:
+                
+                "${mensagem}"
+                
+                Sua mensagem foi encaminhada para o setor responsável e será analisada.
+                Caso necessário, entraremos em contato através deste email.
+                
+                Protocolo: #${Math.floor(Math.random() * 1000000).toString().padStart(6, '0')}
+                Data: ${new Date().toLocaleDateString('pt-BR')}
+                
+                Atenciosamente,
+                Prefeitura Municipal de Nossa Cidade
+                
+                ---
+                Esta é uma mensagem automática, por favor não responda.
+            `;
+            
+            // Criar link mailto para a prefeitura
+            const mailtoLinkPrefeitura = `mailto:${emailPrefeitura}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmailPrefeitura)}`;
+            
+            // Abrir cliente de email para enviar à prefeitura
+            window.location.href = mailtoLinkPrefeitura;
+            
+            // Simular envio de confirmação (em produção, isso seria feito pelo backend)
+            if (receberCopia) {
+                console.log('Email de confirmação seria enviado para:', email);
+            }
+            
+            // Mostrar mensagem de sucesso
+            const msgSucesso = receberCopia 
+                ? 'Obrigado pela sua contribuição! Um email foi gerado para a prefeitura e você receberá uma cópia de confirmação.' 
+                : 'Obrigado pela sua contribuição! Um email foi gerado para a prefeitura com sua mensagem.';
+            
+            showStatus(msgSucesso, 'success');
+            
+            // Limpar formulário (opcional)
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('statusMessage').style.display = 'none';
+            }, 10000);
+        });
+        
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        function showStatus(message, type) {
+            const statusElement = document.getElementById('statusMessage');
+            statusElement.textContent = message;
+            statusElement.className = `status-message ${type}`;
+            statusElement.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
